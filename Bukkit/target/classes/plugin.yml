@@ -1,0 +1,7 @@
+name: cDisguise
+main: dev.brighten.hide.Disguise
+description: Designed to anonymize players. Developed for Smok Network.
+version: 1.0-SNAPSHOT
+softdepends: [Vault]
+depend: [Atlas]
+author: funkemunky

@@ -1,0 +1,9 @@
+dev/brighten/hide/user/User.class
+dev/brighten/hide/handler/DisguiseHandler.class
+dev/brighten/hide/command/DisguiseCommand.class
+dev/brighten/hide/conf/Mongo.class
+dev/brighten/hide/disguise/DisguiseObject.class
+dev/brighten/hide/conf/MySQL.class
+dev/brighten/hide/Disguise.class
+dev/brighten/hide/handler/VaultHandler.class
+dev/brighten/hide/handler/SyncHandler.class
