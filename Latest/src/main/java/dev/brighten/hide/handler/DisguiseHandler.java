@@ -7,13 +7,12 @@ import cc.funkemunky.api.utils.RunUtils;
 import com.mojang.authlib.GameProfile;
 import dev.brighten.hide.Disguise;
 import dev.brighten.hide.disguise.DisguiseObject;
-import dev.brighten.hide.reflection.DisguiseUtil;
 import dev.brighten.hide.game.GameProfileBuilder;
+import dev.brighten.hide.reflection.DisguiseUtil;
 import dev.brighten.hide.user.User;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.shanerx.mojang.PlayerProfile;
 
@@ -26,7 +25,7 @@ import java.util.UUID;
 public class DisguiseHandler implements AtlasListener {
     public static DisguiseHandler INSTANCE;
 
-    private Map<String, UUID> disguisedNames = new HashMap<>();
+    public Map<String, User> disguisedNames = new HashMap<>();
     private static Map<String, String> cachedUUIDs = new HashMap<>();
     private static Map<String, PlayerProfile> cachedProfile = new HashMap<>();
 
@@ -52,32 +51,31 @@ public class DisguiseHandler implements AtlasListener {
 
         RunUtils.task(() -> {
             for(Player all : Bukkit.getOnlinePlayers()) {
-                try {
-                    all.hidePlayer(Disguise.INSTANCE, player);
-                    all.showPlayer(Disguise.INSTANCE, player);
-                } catch (NoSuchMethodError e) {
-                    all.hidePlayer(player);
-                    all.showPlayer(player);
-                }
+                all.hidePlayer(player);
+                all.showPlayer(player);
             }
         }, Disguise.INSTANCE);
     }
 
     public void disguisePlayer(Player player, String name, String group) {
         Disguise.INSTANCE.disguiseThread.execute(() -> {
+            User user = User.getUser(player);
             val target = Bukkit.getOfflinePlayer(name);
             setPlayerSkin(player, target.getName());
             setPlayerNickname(player, target.getName());
 
-            DisguiseObject object = new DisguiseObject(target.getUniqueId(), target.getName(), group);
+            DisguiseObject object = new DisguiseObject(player.getUniqueId(), target.getName(), group);
 
-            User user = User.getUser(player.getUniqueId());
             user.setOriginalGroup(Disguise.INSTANCE.vaultHandler.permission.getPrimaryGroup(player));
+            user.originalPrefix = Disguise.INSTANCE.vaultHandler.chat.getPlayerPrefix(player);
 
             Disguise.INSTANCE.vaultHandler.chat.setPlayerPrefix(player,
                     Disguise.INSTANCE.vaultHandler.chat.getGroupPrefix(player.getWorld(), group));
 
-            object.active = true;
+            user.disguise = object;
+            user.disguise.setActive(true);
+
+            disguisedNames.put(name, user);
             try {
                 Disguise.INSTANCE.syncHandler.upSync(user);
             } catch (IOException e) {
@@ -88,17 +86,23 @@ public class DisguiseHandler implements AtlasListener {
 
     public void undisguisePlayer(Player player) {
         Disguise.INSTANCE.disguiseThread.execute(() -> {
-            User user = User.getUser(player.getUniqueId());
+            User user = User.getUser(player);
 
-            if(user.disguise != null && user.disguise.active) {
-                OfflinePlayer opl = Bukkit.getOfflinePlayer(player.getUniqueId());
+            if(user.disguise != null && user.disguise.isActive()) {
+                String name = user.getPlayer().getName();
+                try {
+                    name = GameProfileBuilder.fetch(user.uuid).getName();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                setPlayerNickname(player, opl.getName());
-                setPlayerSkin(player, opl.getName());
+                setPlayerSkin(player, name);
+                setPlayerNickname(player, name);
 
                 Disguise.INSTANCE.vaultHandler.chat.setPlayerPrefix(player, user.originalPrefix);
 
-                user.disguise.active = false;
+                user.disguise.setActive(false);
+                disguisedNames.remove(user.disguise.playerName);
                 try {
                     Disguise.INSTANCE.syncHandler.upSync(user);
                 } catch (IOException e) {

@@ -26,6 +26,7 @@ public class SyncHandler {
                         Mongo.username, Mongo.password, Mongo.authDB);
             } else database.connect(Mongo.ip, String.valueOf(Mongo.port), Mongo.database);
             enabled = true;
+            database.loadMappings();
         } else if(MySQL.enabled) {
             Disguise.bc("&7Loading in MySQL database from configuration...");
             database = new MySQLDatabase(MySQL.name);
@@ -37,6 +38,7 @@ public class SyncHandler {
                     MySQL.password);
 
             enabled = true;
+            database.loadMappings();
         } else {
             enabled = false;
             Disguise.bc("&cMust have either Mongo and MySQL configured and enabled for sync functionality.");

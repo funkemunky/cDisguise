@@ -1,11 +1,14 @@
 package dev.brighten.hide.disguise;
 
 import dev.brighten.db.utils.json.JSONObject;
+import dev.brighten.hide.handler.DisguiseHandler;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -15,7 +18,8 @@ public class DisguiseObject {
     public final UUID uuid;
     public final String playerName;
     public final String groupDisguise;
-    public boolean active;
+    @Getter
+    private boolean active;
 
     @SneakyThrows
     public String toJson() {
@@ -39,5 +43,14 @@ public class DisguiseObject {
 
         return new DisguiseObject(UUID.fromString(object.getString("uuid")),
                 object.getString("name"), object.getString("group"), object.getBoolean("active"));
+    }
+
+    public void setActive(boolean active) {
+        boolean wasActive = this.active;
+        if(!(this.active = active) && wasActive) {
+            Player player = Bukkit.getPlayer(uuid);
+            if(player != null)
+                DisguiseHandler.INSTANCE.undisguisePlayer(player);
+        }
     }
 }

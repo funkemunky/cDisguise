@@ -17,10 +17,8 @@ import cc.funkemunky.api.tinyprotocol.packet.types.enums.WrappedEnumPlayerInfoAc
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.shanerx.mojang.PlayerProfile;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class DisguiseUtil {
 

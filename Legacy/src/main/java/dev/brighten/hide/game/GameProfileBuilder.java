@@ -1,5 +1,12 @@
 package dev.brighten.hide.game;
 
+import net.minecraft.util.com.google.gson.*;
+import net.minecraft.util.com.mojang.authlib.GameProfile;
+import net.minecraft.util.com.mojang.authlib.properties.Property;
+import net.minecraft.util.com.mojang.authlib.properties.PropertyMap;
+import net.minecraft.util.com.mojang.util.UUIDTypeAdapter;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,13 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.UUID;
-
-import net.minecraft.util.com.google.gson.*;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
-import net.minecraft.util.com.mojang.authlib.properties.Property;
-import net.minecraft.util.com.mojang.authlib.properties.PropertyMap;
-import net.minecraft.util.com.mojang.util.UUIDTypeAdapter;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 public class GameProfileBuilder {
 	

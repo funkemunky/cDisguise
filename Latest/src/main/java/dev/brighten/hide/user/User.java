@@ -8,20 +8,19 @@ import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class User {
     /** Static instances **/
-    private static Map<UUID, User> userMap = new ConcurrentHashMap<>();
+    private static Map<Player, User> userMap = new HashMap<>();
 
-    public static User getUser(UUID uuid) {
-        return userMap.computeIfAbsent(uuid, key -> {
+    public static User getUser(Player player) {
+        return userMap.computeIfAbsent(player, key -> {
             User user = new User(key);
 
             userMap.put(key, user);
-
             return user;
         });
     }
@@ -30,17 +29,19 @@ public class User {
 
     public final UUID uuid;
     private Player player;
-    public String originalPrefix;
+    public String originalPrefix, orignalName;
     @Setter
     private String originalGroup;
     public DisguiseObject disguise;
+    public String rankOption, nameOption;
 
-    public User(UUID uuid) {
-        this.uuid = uuid;
+    public User(Player player) {
+        this.uuid = player.getUniqueId();
+        this.player = player;
 
+        orignalName = player.getName();
         if(Disguise.INSTANCE.vaultHandler != null) {
-            originalGroup = Disguise.INSTANCE.vaultHandler.permission.getPrimaryGroup(getPlayer());
-            originalPrefix = Disguise.INSTANCE.vaultHandler.chat.getPlayerPrefix(player);
+            originalPrefix = Disguise.INSTANCE.vaultHandler.chat.getPlayerPrefix(getPlayer());
         }
 
         //Updating user to see if anything was stored.
