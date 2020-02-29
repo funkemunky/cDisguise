@@ -17,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 
 @Init(commands = true)
@@ -61,6 +62,8 @@ public class DisguiseCommand {
         });
 
         gui.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, new ItemBuilder(Material.PAPER).amount(1).name("Input").build());
+
+        gui.open();
     }
 
     private ChestMenu getRanksMenu(String value) {

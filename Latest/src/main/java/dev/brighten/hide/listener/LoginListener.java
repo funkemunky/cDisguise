@@ -23,7 +23,7 @@ public class LoginListener implements Listener {
                     DisguiseHandler.INSTANCE.disguisePlayer(event.getPlayer(),
                             user.disguise.playerName, user.disguise.groupDisguise);
                     event.getPlayer().sendMessage(Color.translate("&7Your previous disguise as &e"
-                            + user.disguise.playerName + "&7has been applied."));
+                            + user.disguise.playerName + " &7has been applied."));
                 } else if(!user.disguise.groupDisguise.equals(user.originalPrefix)) {
                     Disguise.INSTANCE.vaultHandler.chat.setPlayerPrefix(event.getPlayer(), user.originalPrefix);
                 }

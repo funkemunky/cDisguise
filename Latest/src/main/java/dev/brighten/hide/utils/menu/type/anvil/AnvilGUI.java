@@ -25,7 +25,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -57,6 +56,8 @@ public class AnvilGUI {
     public AnvilGUI(final Player player, final AnvilClickEventHandler handler) {
         this.player = player;
         this.handler = handler;
+
+        if(!Disguise.INSTANCE.isEnabled()) return;
 
         this.listener = new Listener() {
             @EventHandler
@@ -127,11 +128,51 @@ public class AnvilGUI {
         items.put(slot, item);
     }
 
-    public void open() throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void open() {
+        /*player.setLevel(player.getLevel() + 1);
+
+        try {
+            Object p = NMSManager.get().getHandle(player);
+
+            Object container = ContainerAnvil.getConstructor(NMSManager.get().getNMSClass("PlayerInventory"), NMSManager.get().getNMSClass("World"), BlockPosition, EntityHuman).newInstance(NMSManager.get().getPlayerField(player, "inventory"), NMSManager.get().getPlayerField(player, "world"), BlockPosition.getConstructor(int.class, int.class, int.class).newInstance(0, 0, 0), p);
+            NMSManager.get().getField(NMSManager.get().getNMSClass("Container"), "checkReachable").set(container, false);
+
+            //Set the items to the items from the inventory given
+            Object bukkitView = NMSManager.get().invokeMethod("getBukkitView", container);
+            inv = (Inventory) NMSManager.get().invokeMethod("getTopInventory", bukkitView);
+
+            for (AnvilSlot slot : items.keySet()) {
+                inv.setItem(slot.getSlot(), items.get(slot));
+            }
+
+            //Counter stuff that the game uses to keep track of inventories
+            int c = (int) NMSManager.get().invokeMethod("nextContainerCounter", p);
+
+            //Send the packet
+            Constructor<?> chatMessageConstructor = ChatMessage.getConstructor(String.class, Object[].class);
+            Object playerConnection = NMSManager.get().getPlayerField(player, "playerConnection");
+            Object packet = PacketPlayOutOpenWindow.getConstructor(int.class, String.class, NMSManager.get().getNMSClass("IChatBaseComponent"), int.class).newInstance(c, "minecraft:anvil", chatMessageConstructor.newInstance("Repairing", new Object[]{}), 0);
+
+            Method sendPacket = NMSManager.get().getMethod("sendPacket", playerConnection.getClass(), PacketPlayOutOpenWindow);
+            sendPacket.invoke(playerConnection, packet);
+
+            //Set their active container to the container
+            Field activeContainerField = NMSManager.get().getField(EntityHuman, "activeContainer");
+            if (activeContainerField != null) {
+                activeContainerField.set(p, container);
+
+                //Set their active container window id to that counter stuff
+                NMSManager.get().getField(NMSManager.get().getNMSClass("Container"), "windowId").set(activeContainerField.get(p), c);
+
+                //Add the slot listener
+                NMSManager.get().getMethod("addSlotListener", activeContainerField.get(p).getClass(), p.getClass()).invoke(activeContainerField.get(p), p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
         player.setLevel(player.getLevel() + 1);
 
         Object p = CraftReflection.getEntityPlayer(player);
-
 
         Object container = canvilConst.newInstance(CraftReflection.getVanillaInventory(player),
                 CraftReflection.getVanillaWorld(player.getWorld()),
@@ -140,7 +181,7 @@ public class AnvilGUI {
 
         //Set the items to the items from the inventory given
         InventoryView bukkitView = getBukkitView.invoke(container);
-        Inventory inv = bukkitView.getTopInventory();
+        inv = bukkitView.getTopInventory();
 
         for (AnvilSlot slot : items.keySet()) {
             inv.setItem(slot.getSlot(), items.get(slot));
@@ -170,7 +211,7 @@ public class AnvilGUI {
             windowId.set(activeCounter.get(p), c);
 
             //Add the slot listener
-            addSlot.invoke(container, p);
+            addSlot.invoke(activeCounter.get(p), p);
             player.setLevel(player.getLevel() + 1);
         }
     }

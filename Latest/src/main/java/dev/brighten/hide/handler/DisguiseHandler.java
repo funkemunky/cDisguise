@@ -66,8 +66,10 @@ public class DisguiseHandler implements AtlasListener {
 
             DisguiseObject object = new DisguiseObject(player.getUniqueId(), target.getName(), group);
 
-            user.setOriginalGroup(Disguise.INSTANCE.vaultHandler.permission.getPrimaryGroup(player));
-            user.originalPrefix = Disguise.INSTANCE.vaultHandler.chat.getPlayerPrefix(player);
+            if(user.disguise == null || !user.disguise.isActive()) {
+                user.setOriginalGroup(Disguise.INSTANCE.vaultHandler.permission.getPrimaryGroup(player));
+                user.originalPrefix = Disguise.INSTANCE.vaultHandler.chat.getPlayerPrefix(player);
+            }
 
             Disguise.INSTANCE.vaultHandler.chat.setPlayerPrefix(player,
                     Disguise.INSTANCE.vaultHandler.chat.getGroupPrefix(player.getWorld(), group));

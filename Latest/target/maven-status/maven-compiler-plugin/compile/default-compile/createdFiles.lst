@@ -22,6 +22,7 @@ dev/brighten/hide/handler/DisguiseHandler.class
 dev/brighten/hide/utils/menu/type/anvil/AnvilGUI.class
 dev/brighten/hide/reflection/DisguiseUtil.class
 dev/brighten/hide/utils/menu/mask/Mask2D.class
+dev/brighten/hide/handler/AquaHandler.class
 dev/brighten/hide/utils/menu/type/anvil/AnvilGUI$AnvilClickEventHandler.class
 dev/brighten/hide/utils/menu/Menu$MenuDimension.class
 dev/brighten/hide/command/DisguiseCommand.class
