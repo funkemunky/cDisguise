@@ -15,9 +15,11 @@ import cc.funkemunky.api.tinyprotocol.packet.types.enums.WrappedEnumDifficulty;
 import cc.funkemunky.api.tinyprotocol.packet.types.enums.WrappedEnumGameMode;
 import cc.funkemunky.api.tinyprotocol.packet.types.enums.WrappedEnumPlayerInfoAction;
 import com.mojang.authlib.properties.Property;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.awt.*;
 import java.util.Collection;
 
 public class DisguiseUtil {
@@ -83,7 +85,7 @@ public class DisguiseUtil {
     }
 
     public static void sendActionBar(Player player, String message) {
-        WrappedOutChatPacket packet = new WrappedOutChatPacket("{\"text\": \"" + message + "\"}",
+        WrappedOutChatPacket packet = new WrappedOutChatPacket(new TextComponent(TextComponent.fromLegacyText(message)),
                 WrappedChatMessageType.GAME_INFO);
 
         sendPacket(player, packet);

@@ -61,6 +61,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.shanerx</groupId>
+            <artifactId>java-mojang-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
@@ -69,7 +75,7 @@
         <dependency>
             <groupId>cc.funkemunky.utils</groupId>
             <artifactId>Atlas</artifactId>
-            <version>1.8.1</version>
+            <version>1.9</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

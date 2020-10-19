@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.shanerx.mojang.Mojang;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,11 +20,14 @@ public class Disguise extends JavaPlugin {
     public VaultHandler vaultHandler;
     public SyncHandler syncHandler;
     public ExecutorService disguiseThread;
+    public Mojang mojang;
 
     public void onEnable() {
         saveDefaultConfig();
         bc("&7Loading cDisguise v" + getDescription().getVersion() + " by funkemunky...");
         INSTANCE = this;
+
+        mojang = new Mojang().connect();
 
         enable("Atlas scanner");
         Atlas.getInstance().initializeScanner(this, true, true);

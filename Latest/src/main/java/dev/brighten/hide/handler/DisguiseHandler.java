@@ -116,7 +116,7 @@ public class DisguiseHandler implements AtlasListener {
 
     public String getUUID(String name) {
         return cachedUUIDs.computeIfAbsent(name, key -> {
-            String uuid = Atlas.getInstance().getMojang().getUUIDOfUsername(name);
+            String uuid = Disguise.INSTANCE.mojang.getUUIDOfUsername(name);
             cachedUUIDs.put(key, uuid);
 
             return uuid;
@@ -125,7 +125,7 @@ public class DisguiseHandler implements AtlasListener {
 
     public PlayerProfile getProfile(String uuid) {
         return cachedProfile.computeIfAbsent(uuid, key -> {
-           PlayerProfile profile = Atlas.getInstance().getMojang().getPlayerProfile(uuid);
+           PlayerProfile profile = Disguise.INSTANCE.mojang.getPlayerProfile(uuid);
            cachedProfile.put(key, profile);
 
            return profile;

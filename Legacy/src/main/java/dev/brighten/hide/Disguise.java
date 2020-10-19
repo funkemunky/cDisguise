@@ -8,16 +8,21 @@ import dev.brighten.hide.handler.VaultHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.shanerx.mojang.Mojang;
 
 public class Disguise extends JavaPlugin {
 
     public static Disguise INSTANCE;
     public VaultHandler vaultHandler;
     public SyncHandler syncHandler;
+    public Mojang mojang;
 
     public void onEnable() {
+        saveDefaultConfig();
         bc("&7Loading cDisguise v" + getDescription().getVersion() + " by funkemunky...");
         INSTANCE = this;
+
+        mojang = new Mojang().connect();
 
         Plugin vaultPlugin = Bukkit.getPluginManager().getPlugin("Vault");
 
