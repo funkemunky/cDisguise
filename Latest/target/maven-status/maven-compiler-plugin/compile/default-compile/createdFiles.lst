@@ -1,7 +1,6 @@
 dev\brighten\hide\utils\menu\preset\button\FillerButton.class
 dev\brighten\hide\utils\menu\MenuListener.class
 dev\brighten\hide\utils\menu\mask\Mask.class
-dev\brighten\hide\Disguise.class
 dev\brighten\hide\handler\DisguiseHandler.class
 dev\brighten\hide\utils\menu\Menu$CloseHandler.class
 dev\brighten\hide\utils\menu\type\BukkitInventoryHolder.class
@@ -17,7 +16,6 @@ dev\brighten\hide\utils\menu\type\impl\ChestMenu.class
 dev\brighten\hide\handler\AquaHandler.class
 dev\brighten\hide\handler\VaultHandler.class
 dev\brighten\hide\command\DisguiseCommand.class
-dev\brighten\hide\utils\menu\preset\ConfirmationMenu.class
 dev\brighten\hide\utils\menu\type\anvil\AnvilGUI$AnvilSlot.class
 dev\brighten\hide\command\RandomDisguiseCommand.class
 dev\brighten\hide\disguise\DisguiseObject.class
@@ -25,8 +23,6 @@ dev\brighten\hide\utils\menu\button\Button.class
 dev\brighten\hide\handler\SyncHandler.class
 dev\brighten\hide\utils\menu\button\ClickAction.class
 dev\brighten\hide\conf\MySQL.class
-dev\brighten\hide\utils\menu\type\impl\AnvilMenu.class
-dev\brighten\hide\conf\Mongo.class
 dev\brighten\hide\utils\menu\MenuListener$1.class
 dev\brighten\hide\utils\menu\type\impl\BookMenu.class
 dev\brighten\hide\utils\menu\button\ClickAction$InformationPair.class
